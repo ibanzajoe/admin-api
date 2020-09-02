@@ -14,7 +14,6 @@ const sequelize = new Sequelize('defaultdb', 'doadmin', 'kkaz0ar60xdk14j3', {
     dialectOptions: {
         ssl: {
             rejectUnauthorized: false,
-            ca: [rdsCa]
         }
     }
 });
