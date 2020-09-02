@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 const config = require('../config/config')
 const db = {}
 
-const sequelize = new Sequelize(config.db.dsn)
+/* const sequelize = new Sequelize(config.db.dsn) */
 
 /* const fs = require('fs'); */
 /* const rdsCa = fs.readFileSync(__dirname + '/rds-combined-ca-bundle.pem'); */
