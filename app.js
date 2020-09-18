@@ -22,12 +22,11 @@ app.use(populateJWTUser)
 
 app.use('/', require('./routes/index'))
 
-console.log('cant sequelize?')
+console.log('cant sequelize?', sequelize)
 
 sequelize.sync()
-
-  console.log('cant sync')
   .then(() => {
+    console.log('cant sync')
     app.listen(config.port || 8081)
     console.log(`Server started on port ${config.port}`)
   })
