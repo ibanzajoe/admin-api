@@ -8,8 +8,8 @@ const db = {}
 
 /* const fs = require('fs'); */
 /* const rdsCa = fs.readFileSync(__dirname + '/rds-combined-ca-bundle.pem'); */
-const sequelize = new Sequelize('defaultdb', 'doadmin', 'kkaz0ar60xdk14j3', {
-    host: 'nuxt-admin-db-do-user-1558822-0.a.db.ondigitalocean.com',
+const sequelize = new Sequelize('app', 'postgres', 'nn51qwerasdf', {
+    host: 'admin-db-postgres.chx4dnjntuyc.us-west-1.rds.amazonaws.com',
     dialect: 'postgres',
     dialectOptions: {
         ssl: {
