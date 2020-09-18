@@ -10,15 +10,8 @@ const db = {}
 /* const rdsCa = fs.readFileSync(__dirname + '/rds-combined-ca-bundle.pem'); */
 const sequelize = new Sequelize('app', 'postgres', 'nn51qwerasdf', {
     host: 'admin-db-postgres.chx4dnjntuyc.us-west-1.rds.amazonaws.com',
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false,
-        }
-    }
+    dialect: 'postgres'
 });
-
-console.log('connected?: ', sequelize)
 
 fs.readdirSync(__dirname)
   .filter((file) => 
