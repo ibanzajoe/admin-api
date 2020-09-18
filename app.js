@@ -25,6 +25,8 @@ app.use('/', require('./routes/index'))
 console.log('cant sequelize?')
 
 sequelize.sync()
+
+  console.log('cant sync')
   .then(() => {
     app.listen(config.port || 8081)
     console.log(`Server started on port ${config.port}`)
