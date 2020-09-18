@@ -18,6 +18,8 @@ const sequelize = new Sequelize('app', 'postgres', 'nn51qwerasdf', {
     }
 });
 
+console.log('connected?: ', sequelize)
+
 fs.readdirSync(__dirname)
   .filter((file) => 
     file !== 'index.js'
