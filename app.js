@@ -22,7 +22,7 @@ app.use(populateJWTUser)
 
 app.use('/', require('./routes/index'))
 
-sequelize.sync({force: true})
+sequelize.sync()
   .then(() => {
     app.listen(config.port || 8081)
     console.log(`Server started on port ${config.port}`)

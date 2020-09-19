@@ -102,7 +102,17 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: true
   })
 
+  Users.buildNewUser = function (params, role = 'users') {
+    let user = Users.build({
+      email: params.email,
+      password_digest: bcrypt.hashSync(params.password, bcrypt.genSaltSync(10), null)
+    })
+
+    return user
+  }
+
   Users.addHook('beforeSave', function (user, options) {
+    console.log('user password before save: ', user.password)
     if (user.password) user.password_digest = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null)
   })
 

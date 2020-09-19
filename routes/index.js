@@ -60,16 +60,19 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  const { user } = req.body
+  const { email, password } = req.body
 
-  const schema = {
+  const schema = Joi.object({
     email: Joi.string().email().required(),
-    password: Joi.string().required()
-  }
+    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+  })
 
-  const { error, value } = Joi.validate(user, schema, { allowUnknown: true })
+  const value = await schema.validateAsync({
+    email,
+    password
+  })
 
-  if (error) {
+  if (value.error) {
     return res.send({
       code: 400,
       status: `Please check your form to see you have input all the fields correctly`,
@@ -80,9 +83,16 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    const newUser = await Users.create(user)
+    console.log('email , password: ', email, ' ' , password)
+    const newUser = await Users.buildNewUser({
+      email: email,
+      password: password
+    })
+
+    console.log('this is new user: ', newUser)
 
     if (newUser) {
+      await newUser.save()
       return res.status(200).send({
         status: 'User created',
         code: 200,
@@ -98,7 +108,7 @@ router.post('/register', async (req, res) => {
       code: 405,
       status: `Sorry, a user with the same email already exists, please try again with a different email address`,
       message: err,
-      params: req.params
+      params: req.body
     })
   }
 
