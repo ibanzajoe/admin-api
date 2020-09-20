@@ -27,7 +27,9 @@ db.Sequelize = Sequelize
 
 //ASSOCIATIONS
 
-
+//Tags to Lessons && Tags to Entries
+db.Lessons.belongsToMany(db.Tags, { through: db.TagsTo, foreignKey: 'LessonsId', otherKey: 'TagsId' })
+db.Entries.belongsToMany(db.Tags, { through: db.TagsTo, foreignKey: 'EntriesId', otherKey: 'TagsId' })
 
 
 

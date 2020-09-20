@@ -21,8 +21,10 @@ app.use(cors())
 app.use(populateJWTUser)
 
 app.use('/', require('./routes/index'))
+app.use('/admin/users', require('./routes/adminUsers'))
+/* app.use('/courses', require('./routes/courses')) */
 
-sequelize.sync()
+sequelize.sync({force: true})
   .then(() => {
     app.listen(config.port || 8081)
     console.log(`Server started on port ${config.port}`)

@@ -31,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
         msg: 'Email address already in use!'
       }
     },
+    password: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     password_digest: {
       type: DataTypes.TEXT,
       allowNull: true
@@ -96,6 +100,10 @@ module.exports = function(sequelize, DataTypes) {
     reset_password_token: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    oauth: {
+      type: DataTypes.JSONB,
+      allowNull: true
     }
   }, {
     tableName: 'Users',
@@ -111,9 +119,19 @@ module.exports = function(sequelize, DataTypes) {
     return user
   }
 
-  Users.addHook('beforeSave', function (user, options) {
-    console.log('user password before save: ', user.password)
+  Users.addHook('beforeSave', (user) => {
     if (user.password) user.password_digest = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null)
+  })
+
+  Users.addHook('beforeBulkCreate', (users) => {
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].password) {
+        const user_password = users[i].password
+        users[i].password_digest = bcrypt.hashSync(user_password, bcrypt.genSaltSync(10), null)
+        users[i].password = null
+      }
+    }
+    
   })
 
   Users.prototype.comparePassword = function (password) {
